@@ -1,7 +1,7 @@
 # fetch basic image
 FROM maven:3.3.9-jdk-8 as build
 
-RUN apk --no-cache add curl
+RUN apt-get install curl
 
 # application placed into /opt/app
 WORKDIR /app
@@ -23,7 +23,7 @@ COPY --from=build ${TARGET}/lib /app/lib
 COPY --from=build ${TARGET}/classes .
 
 
-EXPOSE 8080
+EXPOSE 9090
 ENTRYPOINT ["java","-cp","/app:/app/lib/*","com.dekses.jersey.docker.demo.Main"]
 
 
