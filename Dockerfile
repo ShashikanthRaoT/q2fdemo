@@ -1,6 +1,8 @@
 # fetch basic image
 FROM maven:3.3.9-jdk-8 as build
 
+RUN apk --no-cache add curl
+
 # application placed into /opt/app
 WORKDIR /app
 
