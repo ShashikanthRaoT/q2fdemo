@@ -17,11 +17,11 @@ public class MQOps {
 		MQQueueManager queueManager = null;
 		MQQueue queue = null;
         Hashtable props = new Hashtable();
-        props.put(MQConstants.CHANNEL_PROPERTY, "DEV.APP.SVRCONN");
+        props.put(MQConstants.CHANNEL_PROPERTY, "QS_SVRCONN");
         props.put(MQConstants.PORT_PROPERTY, 1414);
         props.put(MQConstants.HOST_NAME_PROPERTY, "10.254.12.203");
-        props.put(MQConstants.USER_ID_PROPERTY, "app");
-        props.put(MQConstants.PASSWORD_PROPERTY, "passw0rd");
+        //props.put(MQConstants.USER_ID_PROPERTY, "app");
+        //props.put(MQConstants.PASSWORD_PROPERTY, "passw0rd");
 
 		try {
       queueManager = new MQQueueManager("QUICKSTART", props);
