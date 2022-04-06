@@ -41,7 +41,7 @@ public class Main {
         try {
             Thread.sleep(1000000);
         }catch(Exception ex) {
-
+            System.out.println("Ending web server.");
         }
         server.stop();
     }

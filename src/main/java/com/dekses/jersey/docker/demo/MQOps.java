@@ -19,12 +19,12 @@ public class MQOps {
         Hashtable props = new Hashtable();
         props.put(MQConstants.CHANNEL_PROPERTY, "DEV.APP.SVRCONN");
         props.put(MQConstants.PORT_PROPERTY, 1414);
-        props.put(MQConstants.HOST_NAME_PROPERTY, "10.41.4.16");
+        props.put(MQConstants.HOST_NAME_PROPERTY, "10.254.12.203");
         props.put(MQConstants.USER_ID_PROPERTY, "app");
         props.put(MQConstants.PASSWORD_PROPERTY, "passw0rd");
 
 		try {
-            queueManager = new MQQueueManager("MQMFT", props);
+      queueManager = new MQQueueManager("QUICKSTART", props);
 			int openOptions = MQConstants.MQOO_OUTPUT + MQConstants.MQOO_INPUT_AS_Q_DEF;
 			queue = queueManager.accessQueue("SWIFTQ", openOptions);
 			MQPutMessageOptions mqPutMessageOptions = new MQPutMessageOptions();
@@ -34,7 +34,7 @@ public class MQOps {
 			queue.put(message, mqPutMessageOptions);
 			replyMessage = toHexString(message.messageId);
 		} catch (Exception e) {
-			e.printStackTrace();
+			replyMessage = e.getMessage();
 		} finally {
 			if (queue != null)
 				queue.close();
