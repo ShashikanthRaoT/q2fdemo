@@ -21,7 +21,7 @@ VOLUME /tmp
 ARG TARGET=/app/target/
 COPY --from=build ${TARGET}/lib /app/lib
 COPY --from=build ${TARGET}/classes .
-COPY --from=build ${TARGET}}/WebContent .
+COPY src/WebContent /WebContent/
 
 EXPOSE 8080
 ENTRYPOINT ["java","-cp","/app:/app/lib/*","com.dekses.jersey.docker.demo.Main"]
