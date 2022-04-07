@@ -30,7 +30,7 @@ public class MQOps {
 			message.format = MQConstants.MQFMT_STRING;
 			message.writeString("This is a test message fired from a web server\n");;
 			queue.put(message, mqPutMessageOptions);
-			replyMessage = toHexString(message.messageId);
+			replyMessage = "Transfer ID: " +toHexString(message.messageId);
 		} catch (Exception e) {
 			replyMessage = e.getMessage();
 		} finally {
