@@ -6,12 +6,49 @@ import java.util.Hashtable;
 import com.ibm.mq.constants.*;
 import com.ibm.mq.MQPutMessageOptions;
 import com.ibm.mq.MQException;
+import java.util.*;
 
 public class MQOps {
     private static int ID_LENGTH = 24;
 
+    private static List<String> customerNames = new ArrayList<String>();
+    static {
+      customerNames.add("Alec Baldwin");
+      customerNames.add("Mark Johnson");
+      customerNames.add("Julious King");
+      customerNames.add("Nicolas Bird");
+      customerNames.add("Bill Ferguson");
+      customerNames.add("Susan Bernard");
+      customerNames.add("Chandrashekar S");
+      customerNames.add("Naveen Gupta");
+      customerNames.add("Amit Mulani");
+      customerNames.add("Anushka Gowda");
+      customerNames.add("Nivedita Shetty");
+      customerNames.add("Nirmala S");
+      customerNames.add("Alain Frost");
+      customerNames.add("Oscar Dmello");
+    }
+
+    private static List<String> bankNames = new ArrayList<String>();
+    static {
+      bankNames.add("Bank ANZ");
+      bankNames.add("Wachovia Bank");
+      bankNames.add("Baco Do Brasil");
+      bankNames.add("NedBank SA");
+      bankNames.add("State Bank of India");
+      bankNames.add("Banco Santander");
+      bankNames.add("First Commercial");
+      bankNames.add("HDFC Bank");
+      bankNames.add("Bank of New York Mellon");
+      bankNames.add("Ansett Australia");
+      bankNames.add("Bank of England");
+      bankNames.add("Bank of Seychells");
+      bankNames.add("MFUJ Bank");
+      bankNames.add("UBS");
+    }
+
     @SuppressWarnings("unchecked")
-	public static String postMessage() throws MQException {
+	  public static String postMessage() throws MQException {
 		String replyMessage = "";
 
 		MQQueueManager queueManager = null;
@@ -28,9 +65,10 @@ public class MQOps {
 			MQPutMessageOptions mqPutMessageOptions = new MQPutMessageOptions();
 			MQMessage message = new MQMessage();
 			message.format = MQConstants.MQFMT_STRING;
-			message.writeString("This is a test message fired from a web server\n");;
+      String requestMessage = getSwiftMessage();
+			message.writeString(requestMessage);;
 			queue.put(message, mqPutMessageOptions);
-			replyMessage = "Transfer ID: " +toHexString(message.messageId);
+			replyMessage = "Request ID: " +toHexString(message.messageId) + "\n" + requestMessage;
 		} catch (Exception e) {
 			replyMessage = e.getMessage();
 		} finally {
@@ -59,5 +97,20 @@ public class MQOps {
       }
     
       return resultId;
+    }
+
+    public static String getSwiftMessage() {
+      StringBuffer sb = new StringBuffer();
+      Random randomGenerator = new Random();
+      int x = randomGenerator.nextInt(14); 
+      String accountNumberBase = "10080092012";
+      int accountPreffix = randomGenerator.nextInt(1000, 3000);
+      sb.append("Customer:\n");
+      sb.append("\n\tName: " + customerNames.get(x));
+      sb.append("\n\tAccount Number: " + accountNumberBase + Integer.toString(accountPreffix));
+      sb.append("\n\tBank Name: " + bankNames.get(x));
+      sb.append("\n\tAmount in $: " + randomGenerator.nextInt(115000, 225000));
+
+      return sb.toString();
     }
 }
