@@ -20,8 +20,6 @@ public class MQOps {
         props.put(MQConstants.CHANNEL_PROPERTY, "QS_SVRCONN");
         props.put(MQConstants.PORT_PROPERTY, 1414);
         props.put(MQConstants.HOST_NAME_PROPERTY, "10.254.12.203");
-        //props.put(MQConstants.USER_ID_PROPERTY, "app");
-        //props.put(MQConstants.PASSWORD_PROPERTY, "passw0rd");
 
 		try {
       queueManager = new MQQueueManager("QUICKSTART", props);
@@ -30,7 +28,7 @@ public class MQOps {
 			MQPutMessageOptions mqPutMessageOptions = new MQPutMessageOptions();
 			MQMessage message = new MQMessage();
 			message.format = MQConstants.MQFMT_STRING;
-			message.writeString("This is a test message");;
+			message.writeString("This is a test message fired from a web server\n");;
 			queue.put(message, mqPutMessageOptions);
 			replyMessage = toHexString(message.messageId);
 		} catch (Exception e) {
