@@ -105,11 +105,12 @@ public class MQOps {
       int x = randomGenerator.nextInt(14); 
       String accountNumberBase = "10080092012";
       int accountPreffix = randomGenerator.nextInt(1000);
-      sb.append("Customer:\n");
+      sb.append("\nCustomer Detail:\n");
       sb.append("\n\tName: " + customerNames.get(x));
       sb.append("\n\tAccount Number: " + accountNumberBase + Integer.toString(accountPreffix));
       sb.append("\n\tBank Name: " + bankNames.get(x));
       sb.append("\n\tAmount in $: " + randomGenerator.nextInt(225000));
+      sb.append("\n");
 
       return sb.toString();
     }

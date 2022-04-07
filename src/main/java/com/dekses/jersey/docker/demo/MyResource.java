@@ -11,11 +11,27 @@ import java.net.URI;
  */
 @Path("/")
 public class MyResource {
-
     @GET
-    public Response root() {
-      return Response.seeOther(URI.create("/WebContent/index")).build();
+    @Produces(MediaType.TEXT_HTML)
+    public String root() {
+      return getIndexPage();
     }
+
+    private String getIndexPage() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("<!DOCTYPE html>\n");
+        sb.append("<html>\n");
+        sb.append("<head>\n");
+        sb.append("<meta charset=\"ISO-8859-1\">\n");
+        sb.append("<title>Insert title here</title>\n");
+        sb.append("</head>\n");
+        sb.append("<body>\n");
+        sb.append("<a href=\"rest/hello\">Click Here</a>\n");
+        sb.append("</body>\n");
+        sb.append("</html>\n");
+        return sb.toString();
+    }
+
     /**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "text/plain" media type.
