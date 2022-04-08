@@ -10,6 +10,22 @@ import java.util.*;
 
 public class MQOps {
     private static int ID_LENGTH = 24;
+    private static String replyTextBegin = "<!DOCTYPE html> " +
+                                 "<html>" +
+                                 "<head>" +
+                                 "<meta charset=\"ISO-8859-1\">" +
+                                 "<title>IBM MQ Managed File Transfer Demo</title>" +
+                                 "<style>" +
+    "table, th, td {" +
+      "border: 1px solid black; " +
+    "} " +
+    "</style> " +
+    "</head> " +
+    "<body> " +
+    "<table style=\"width:25%\">";
+    private static String replyTextEnd = "  </table>" +
+    "</body>" +
+    "</html>";
 
     private static List<String> customerNames = new ArrayList<String>();
     static {
@@ -68,7 +84,7 @@ public class MQOps {
       String requestMessage = getSwiftMessage();
 			message.writeString(requestMessage);;
 			queue.put(message, mqPutMessageOptions);
-			replyMessage = "Request ID: " +toHexString(message.messageId) + "\n" + requestMessage;
+			replyMessage = getSwiftMessageHtml(toHexString(message.messageId));
 		} catch (Exception e) {
 			replyMessage = e.getMessage();
 		} finally {
@@ -114,4 +130,21 @@ public class MQOps {
 
       return sb.toString();
     }
-}
+
+    public static String getSwiftMessageHtml(final String messageId) {
+      StringBuffer sb = new StringBuffer();
+      Random randomGenerator = new Random();
+      int x = randomGenerator.nextInt(14); 
+      String accountNumberBase = "10080092012";
+      int accountPreffix = randomGenerator.nextInt(1000);
+      sb.append(replyTextBegin);
+      sb.append( "<tr><th>Transaction ID:</th><td>"+messageId + "</td></tr>");
+      sb.append( "<tr><th>Customer Name:</th><td>"+ customerNames.get(x) + "</td></tr>");
+      sb.append( "<tr><th>Account Number:</th><td>"+ accountNumberBase + Integer.toString(accountPreffix) + "</td></tr>");
+      sb.append( "<tr><th>Bank:</th><td>"+ bankNames.get(x) + "</td></tr>");
+      sb.append( "<tr><th>Amount in $:</th><td>"+ randomGenerator.nextInt(225000) + "</td></tr>");
+      sb.append(replyTextEnd);
+      return sb.toString();
+    }
+  }
+
