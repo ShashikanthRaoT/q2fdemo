@@ -22,7 +22,7 @@ public class MQOps {
     "</style> " +
     "</head> " +
     "<body> " +
-    "<table style=\"width:25%\">";
+    "<table style=\"width:50%\">";
     private static String replyTextEnd = "  </table>" +
     "</body>" +
     "</html>";
@@ -61,6 +61,23 @@ public class MQOps {
       bankNames.add("Bank of Seychells");
       bankNames.add("MFUJ Bank");
       bankNames.add("UBS");
+    }
+    private static List<String> customerOrg = new ArrayList<String>();
+    static {
+      customerOrg.add("Child Care Trust");
+      customerOrg.add("Point Securities LLP");
+      customerOrg.add("Adonis ImportExports");
+      customerOrg.add("Chapline Industries");
+      customerOrg.add("Indic Cosmetology Labs");
+      customerOrg.add("FiSer Homes Inc");
+      customerOrg.add("Marvel Market Makers");
+      customerOrg.add("Bionic Searoutes Inc");
+      customerOrg.add("Future Trades Ltd");
+      customerOrg.add("Cosmic Lights Inc");
+      customerOrg.add("Sandy Sugars Ltd");
+      customerOrg.add("Mayur Partners LLP");
+      customerOrg.add("Pomodoro Pizza Delights");
+      customerOrg.add("StreetFood Movers Inc");
     }
 
     @SuppressWarnings("unchecked")
@@ -140,6 +157,7 @@ public class MQOps {
       sb.append(replyTextBegin);
       sb.append( "<tr><th>Transaction ID:</th><td>"+messageId + "</td></tr>");
       sb.append( "<tr><th>Customer Name:</th><td>"+ customerNames.get(x) + "</td></tr>");
+      sb.append( "<tr><th>Customer Name:</th><td>"+ customerOrg.get(x) + "</td></tr>");
       sb.append( "<tr><th>Account Number:</th><td>"+ accountNumberBase + Integer.toString(accountPreffix) + "</td></tr>");
       sb.append( "<tr><th>Bank:</th><td>"+ bankNames.get(x) + "</td></tr>");
       sb.append( "<tr><th>Amount in $:</th><td>"+ randomGenerator.nextInt(225000) + "</td></tr>");
