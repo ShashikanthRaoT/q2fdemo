@@ -70,7 +70,7 @@ public class MyResource {
      */
     @GET
     @Path("myresource")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_HTML)
     public String getIt() {
         String replyMsg = "";
         System.out.println("Received request ");
