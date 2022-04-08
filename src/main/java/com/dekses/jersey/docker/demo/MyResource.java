@@ -11,11 +11,39 @@ import java.net.URI;
  */
 @Path("/")
 public class MyResource {
+    
+    private String welcomeText = "<!DOCTYPE html> " +
+                                 "<html>" +
+                                 "<head>" +
+                                 "<meta charset=\"ISO-8859-1\">" +
+                                 "<title>IBM MQ Managed File Transfer Demo</title>" +
+                                 "<style>" +
+    "table, th, td {" +
+      "border: 1px solid black; " +
+    "} " +
+    "</style> " +
+    "</head> " +
+    "<body> " +
+    "<table style=\"width:100%\">" +
+    "<tr> " +
+    "     <th><h1>IBM MQ Managed File Transfer</h1>" +
+    "     </br> " +
+    "      <h2>Message to File transfer Demo</h2>" +
+    "     </br>" +
+    "      <h3><a href=\"myapp/myresource\">Click Here to post a SWIFT message</a></h3>" +
+    "   </th>" +
+    "   </tr>" +
+    "  </table>" +
+    "</body>" +
+    "</html>";
+    
     @GET
+    @Path("/")
     @Produces(MediaType.TEXT_HTML)
     public String root() {
-      return getIndexPage();
+      return welcomeText;//getIndexPage();
     }
+
 
     private String getIndexPage() {
         StringBuffer sb = new StringBuffer();
@@ -23,10 +51,12 @@ public class MyResource {
         sb.append("<html>\n");
         sb.append("<head>\n");
         sb.append("<meta charset=\"ISO-8859-1\">\n");
-        sb.append("<title>Insert title here</title>\n");
+        sb.append("<title>IBM MQ Managed File Transfer Demo</title>\n");
         sb.append("</head>\n");
         sb.append("<body>\n");
-        sb.append("<a href=\"rest/hello\">Click Here</a>\n");
+        sb.append("IBM MQ Managed File Transfer");
+        sb.append("Message to File transfer Demo");
+        sb.append("<a href=\"myapp/myresource\">Click me to post a SWIFT Message</a>\n");
         sb.append("</body>\n");
         sb.append("</html>\n");
         return sb.toString();
