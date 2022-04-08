@@ -1,6 +1,8 @@
 package com.dekses.jersey.docker.demo;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -73,7 +75,25 @@ public class MyResource {
     @Produces(MediaType.TEXT_HTML)
     public String getIt() {
         String replyMsg = "";
-        System.out.println("Received request ");
+        System.out.println("GET Request Received");
+        try {
+            replyMsg = MQOps.postMessage();
+            System.out.println("Generate request with ID: " + replyMsg);
+        } catch(Exception ex) {
+            System.out.println("Exeption caught");
+            ex.printStackTrace();
+            replyMsg = ex.getLocalizedMessage();
+        }
+        return replyMsg;
+    }
+
+    @POST
+    @Path("myresource")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_HTML)
+    public String putIt(Customer cust) {
+        String replyMsg = "";
+        System.out.println("PUT Request received " + cust.toString());
         try {
             replyMsg = MQOps.postMessage();
             System.out.println("Generate request with ID: " + replyMsg);
