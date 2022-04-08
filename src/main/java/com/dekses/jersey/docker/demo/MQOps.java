@@ -101,7 +101,7 @@ public class MQOps {
       String requestMessage = getSwiftMessage();
 			message.writeString(requestMessage);;
 			queue.put(message, mqPutMessageOptions);
-			replyMessage = getSwiftMessageHtml(toHexString(message.messageId));
+			replyMessage = "TransactionID: " + toHexString(message.messageId) + getSwiftMessage();
 		} catch (Exception e) {
 			replyMessage = e.getMessage();
 		} finally {
@@ -134,7 +134,7 @@ public class MQOps {
     String requestMessage = cust.getJson();
     message.writeString(requestMessage);;
     queue.put(message, mqPutMessageOptions);
-    replyMessage = getSwiftMessageHtml(toHexString(message.messageId), cust.getJson());
+    replyMessage = getSwiftMessageHtml(toHexString(message.messageId), cust);
   } catch (Exception e) {
     replyMessage = e.getMessage();
   } finally {
