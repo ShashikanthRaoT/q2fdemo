@@ -8,6 +8,25 @@
       border: 1px solid black;
     }
 </style>
+<script type = "text/javascript">  
+    function myfunction() {   
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://m2fdemot4-ibmmqft.apps.ibmmqft.cp.fyre.ibm.com/myapp/myresource", true);
+        alert("Got")
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            name:  document.querySelector('username').value,
+            accoutNumber: document.querySelector('accountNumber').value,
+            amount: document.querySelector('amount').value,
+            organization:document.querySelector('organization').value,
+            bankName:document.querySelector('bankName').value
+        }));
+        xhr.onload = function() {
+            var data = JSON.parse(this.responseText);
+            console.log(data);
+        };
+    }  
+</script>  
 </head>
 <body>
     <table style="width:100%">
@@ -16,9 +35,25 @@
           </br>
            <h2>Message to File transfer Demo</h2>
           </br>
-           <h3><a href="rest/hello">Click Here to post a SWIFT message</a></h3>
-        </th>
+         </th>
+        </tr>
+        <tr>
         </tr>
       </table>
+      <form>
+        <label for="username">Name: </label>
+        <input type="text" id="username" name="username"><br><br>
+        <label for="accountNumber">Account Number: </label>
+        <input type="text" id="accountNumber" name="accountNumber"><br><br>
+        <label for="bankName">Bank Name: </label>
+        <input type="text" id="bankName" name="bankName"><br><br>
+        <label for="organization">Organization: </label>
+        <input type="text" id="organization" name="organization"><br><br>
+        <label for="amount">Amount in $: </label>
+        <input type="number" id="amount" name="amount"><br><br>
+        <input type = "button" onclick = "myfunction()" value = "Submit">      
+    </form>          
+
+
 </body>
 </html>

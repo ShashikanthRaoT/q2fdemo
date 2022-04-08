@@ -1,7 +1,5 @@
 package com.dekses.jersey.docker.demo;
 
-import com.ibm.disthub2.impl.formats.Envelop.Constants.pubendsTable_type;
-
 public class Customer {
     private String name;
     private String accountNumber;
@@ -51,5 +49,16 @@ public class Customer {
 
     public String toString() {
         return this.accountNumber + this.name + this.amount + this.bankName + this.organization;
+    }
+
+    public String getJson() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("{");
+        sb.append("\"name:\"" + "\"" +this.name + "\",");
+        sb.append("\"accountNumber:\"" + "\"" +this.accountNumber + "\",");
+        sb.append("\"organizationName:\"" + "\"" +this.organization + "\",");
+        sb.append("\"bankName:\"" + "\"" +this.bankName + "\",");
+        sb.append("\"amount:\""  + this.amount + "}");
+        return sb.toString();
     }
 }

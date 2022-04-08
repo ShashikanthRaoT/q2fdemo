@@ -113,6 +113,39 @@ public class MQOps {
 		return replyMessage;
 	}
 
+  @SuppressWarnings("unchecked")
+  public static String postMessage(Customer cust) throws MQException {
+  String replyMessage = "";
+
+  MQQueueManager queueManager = null;
+  MQQueue queue = null;
+      Hashtable props = new Hashtable();
+      props.put(MQConstants.CHANNEL_PROPERTY, "QS_SVRCONN");
+      props.put(MQConstants.PORT_PROPERTY, 1414);
+      props.put(MQConstants.HOST_NAME_PROPERTY, "10.254.12.203");
+
+  try {
+    queueManager = new MQQueueManager("QUICKSTART", props);
+    int openOptions = MQConstants.MQOO_OUTPUT + MQConstants.MQOO_INPUT_AS_Q_DEF;
+    queue = queueManager.accessQueue("SWIFTQ", openOptions);
+    MQPutMessageOptions mqPutMessageOptions = new MQPutMessageOptions();
+    MQMessage message = new MQMessage();
+    message.format = MQConstants.MQFMT_STRING;
+    String requestMessage = cust.getJson();
+    message.writeString(requestMessage);;
+    queue.put(message, mqPutMessageOptions);
+    replyMessage = getSwiftMessageHtml(toHexString(message.messageId), cust.getJson());
+  } catch (Exception e) {
+    replyMessage = e.getMessage();
+  } finally {
+    if (queue != null)
+      queue.close();
+    if (queueManager != null)
+      queueManager.disconnect();;
+  }
+  return replyMessage;
+}
+
     public static String toHexString(byte[] id)
     {
       StringBuffer sb = new StringBuffer ();
@@ -148,19 +181,15 @@ public class MQOps {
       return sb.toString();
     }
 
-    public static String getSwiftMessageHtml(final String messageId) {
+    public static String getSwiftMessageHtml(final String messageId, Customer cust) {
       StringBuffer sb = new StringBuffer();
-      Random randomGenerator = new Random();
-      int x = randomGenerator.nextInt(14); 
-      String accountNumberBase = "10080092012";
-      int accountPreffix = randomGenerator.nextInt(1000);
       sb.append(replyTextBegin);
       sb.append( "<tr><th>Transaction ID:</th><td>"+messageId + "</td></tr>");
-      sb.append( "<tr><th>Customer Name:</th><td>"+ customerNames.get(x) + "</td></tr>");
-      sb.append( "<tr><th>Customer Name:</th><td>"+ customerOrg.get(x) + "</td></tr>");
-      sb.append( "<tr><th>Account Number:</th><td>"+ accountNumberBase + Integer.toString(accountPreffix) + "</td></tr>");
-      sb.append( "<tr><th>Bank:</th><td>"+ bankNames.get(x) + "</td></tr>");
-      sb.append( "<tr><th>Amount in $:</th><td>"+ randomGenerator.nextInt(225000) + "</td></tr>");
+      sb.append( "<tr><th>Customer Name:</th><td>"+ cust.getName() + "</td></tr>");
+      sb.append( "<tr><th>Organization:</th><td>"+ cust.getOrganization() + "</td></tr>");
+      sb.append( "<tr><th>Account Number:</th><td>"+ cust.getAccountNumber() + "</td></tr>");
+      sb.append( "<tr><th>Bank:</th><td>"+ cust.getBankName() + "</td></tr>");
+      sb.append( "<tr><th>Amount in $:</th><td>"+ cust.getAmount() + "</td></tr>");
       sb.append(replyTextEnd);
       return sb.toString();
     }

@@ -95,7 +95,7 @@ public class MyResource {
         String replyMsg = "";
         System.out.println("PUT Request received " + cust.toString());
         try {
-            replyMsg = MQOps.postMessage();
+            replyMsg = MQOps.postMessage(cust);
             System.out.println("Generate request with ID: " + replyMsg);
         } catch(Exception ex) {
             System.out.println("Exeption caught");
