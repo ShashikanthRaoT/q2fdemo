@@ -11,19 +11,21 @@
 <script type = "text/javascript">  
     function myfunction() {   
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://m2fdemot4-ibmmqft.apps.ibmmqft.cp.fyre.ibm.com/myapp/myresource", true);
+        xhr.open("POST", "http://m2fdemot6-ibmmqft.apps.ibmmqft.cp.fyre.ibm.com/myapp/myresource", true);
         alert("Got")
         xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({
+        var jsonText = JSON.stringify({
             name:  document.querySelector('username').value,
             accoutNumber: document.querySelector('accountNumber').value,
             amount: document.querySelector('amount').value,
             organization:document.querySelector('organization').value,
             bankName:document.querySelector('bankName').value
-        }));
+        });
+        alert(jsonText);
+        xhr.send(jsonText);
         xhr.onload = function() {
             var data = JSON.parse(this.responseText);
-            console.log(data);
+            alert(data);
         };
     }  
 </script>  

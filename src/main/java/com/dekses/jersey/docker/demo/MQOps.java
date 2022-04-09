@@ -7,6 +7,7 @@ import com.ibm.mq.constants.*;
 import com.ibm.mq.MQPutMessageOptions;
 import com.ibm.mq.MQException;
 import java.util.*;
+import java.time.*;
 
 public class MQOps {
     private static int ID_LENGTH = 24;
@@ -190,6 +191,7 @@ public class MQOps {
       sb.append( "<tr><th>Account Number:</th><td>"+ cust.getAccountNumber() + "</td></tr>");
       sb.append( "<tr><th>Bank:</th><td>"+ cust.getBankName() + "</td></tr>");
       sb.append( "<tr><th>Amount in $:</th><td>"+ cust.getAmount() + "</td></tr>");
+      sb.append( "<tr><th>Time:</th><td>"+ Instant.now().toString() + "</td></tr>");
       sb.append(replyTextEnd);
       return sb.toString();
     }
