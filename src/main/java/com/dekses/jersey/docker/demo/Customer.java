@@ -60,7 +60,7 @@ public class Customer {
         sb.append("\"organizationName\":" + "\"" +this.organization + "\",");
         sb.append("\"bankName\":" + "\"" +this.bankName + "\",");
         sb.append("\"amount\":"  + this.amount + "}");
-        sb.append("\"transactionTime\":"  + curTime + "}");
+        sb.append("\"transactionTime\":"  + curTime + "}\n");
         return sb.toString();
     }
 }
