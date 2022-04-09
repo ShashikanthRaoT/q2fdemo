@@ -59,8 +59,8 @@ public class Customer {
         sb.append("\"accountNumber\":" + "\"" +this.accountNumber + "\",");
         sb.append("\"organizationName\":" + "\"" +this.organization + "\",");
         sb.append("\"bankName\":" + "\"" +this.bankName + "\",");
-        sb.append("\"amount\":"  + this.amount + "}");
-        sb.append("\"transactionTime\":"  + curTime + "}\n");
+        sb.append("\"amount\":"  + this.amount + ",");
+        sb.append("\"transactionTime\":"  + "\"" + curTime + "\"}\n");
         return sb.toString();
     }
 }
