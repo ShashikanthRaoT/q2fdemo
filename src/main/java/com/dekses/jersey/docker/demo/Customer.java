@@ -1,4 +1,5 @@
 package com.dekses.jersey.docker.demo;
+import java.time.*;
 
 public class Customer {
     private String name;
@@ -51,14 +52,15 @@ public class Customer {
         return this.accountNumber + this.name + this.amount + this.bankName + this.organization;
     }
 
-    public String getJson() {
+    public String getJson(String curTime) {
         StringBuffer sb = new StringBuffer();
         sb.append("{");
-        sb.append("\"name:\"" + "\"" +this.name + "\",");
-        sb.append("\"accountNumber:\"" + "\"" +this.accountNumber + "\",");
-        sb.append("\"organizationName:\"" + "\"" +this.organization + "\",");
-        sb.append("\"bankName:\"" + "\"" +this.bankName + "\",");
-        sb.append("\"amount:\""  + this.amount + "}");
+        sb.append("\"customerName\":" + "\"" +this.name + "\",");
+        sb.append("\"accountNumber\":" + "\"" +this.accountNumber + "\",");
+        sb.append("\"organizationName\":" + "\"" +this.organization + "\",");
+        sb.append("\"bankName\":" + "\"" +this.bankName + "\",");
+        sb.append("\"amount\":"  + this.amount + "}");
+        sb.append("\"transactionTime\":"  + curTime + "}");
         return sb.toString();
     }
 }

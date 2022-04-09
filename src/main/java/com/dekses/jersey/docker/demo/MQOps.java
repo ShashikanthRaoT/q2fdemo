@@ -132,10 +132,11 @@ public class MQOps {
     MQPutMessageOptions mqPutMessageOptions = new MQPutMessageOptions();
     MQMessage message = new MQMessage();
     message.format = MQConstants.MQFMT_STRING;
-    String requestMessage = cust.getJson();
+    String curTime = Instant.now().toString();
+    String requestMessage = cust.getJson(curTime);
     message.writeString(requestMessage);;
     queue.put(message, mqPutMessageOptions);
-    replyMessage = getSwiftMessageHtml(toHexString(message.messageId), cust);
+    replyMessage = getSwiftMessageHtml(toHexString(message.messageId), cust, curTime);
   } catch (Exception e) {
     replyMessage = e.getMessage();
   } finally {
@@ -182,7 +183,7 @@ public class MQOps {
       return sb.toString();
     }
 
-    public static String getSwiftMessageHtml(final String messageId, Customer cust) {
+    public static String getSwiftMessageHtml(final String messageId, Customer cust, String curTime) {
       StringBuffer sb = new StringBuffer();
       sb.append(replyTextBegin);
       sb.append( "<tr><th>Transaction ID:</th><td>"+messageId + "</td></tr>");
@@ -191,7 +192,7 @@ public class MQOps {
       sb.append( "<tr><th>Account Number:</th><td>"+ cust.getAccountNumber() + "</td></tr>");
       sb.append( "<tr><th>Bank:</th><td>"+ cust.getBankName() + "</td></tr>");
       sb.append( "<tr><th>Amount in $:</th><td>"+ cust.getAmount() + "</td></tr>");
-      sb.append( "<tr><th>Time:</th><td>"+ Instant.now().toString() + "</td></tr>");
+      sb.append( "<tr><th>Time:</th><td>"+ curTime + "</td></tr>");
       sb.append(replyTextEnd);
       return sb.toString();
     }
